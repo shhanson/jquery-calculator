@@ -11,6 +11,10 @@ $(document).ready(function() {
             $('#error').remove();
         }
 
+        if($('screen').has($('#result'))){
+            $('#result').remove();
+        }
+
         $('#screen').append("<span>" + $(this).text() + "</span>");
         input.push($(this).text());
         console.log(input);
@@ -38,10 +42,6 @@ $(document).ready(function() {
             for (let i = operatorIndex + 1; i < input.length; i++) {
                 operand2 += input[i];
             }
-
-            // if (operand2.length === 0) {
-            //     operand2 = "0";
-            // }
 
             operand1 = parseInt(operand1);
             operand2 = parseInt(operand2);
@@ -71,7 +71,7 @@ $(document).ready(function() {
                     $('#screen').html("<span id='error'>ERROR</span>");
             }
 
-            $('#screen').html("<span>" + result + "</span>");
+            $('#screen').html("<span id='result'>" + result + "</span>");
 
         } else {
             //console.log("INVALID INPUT ERROR");
@@ -130,7 +130,7 @@ $(document).ready(function() {
 
     function hasMultipleOperators(expression) {
         let substring = expression.slice(1);
-        if(indexOfFirstOperator(substring) !== -1 && (substring[indexOfFirstOperator(substring)] === "x" || substring[indexOfFirstOperator(substring)] === "÷")){
+        if (indexOfFirstOperator(substring) !== -1 && (substring[indexOfFirstOperator(substring)] === "x" || substring[indexOfFirstOperator(substring)] === "÷")) {
             return true;
         }
 
