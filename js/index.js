@@ -17,7 +17,9 @@ $(document).ready(function() {
     });
 
     $('#equals').click(function() {
+
         evaluateExpression();
+
     })
 
     function evaluateExpression() {
@@ -26,14 +28,8 @@ $(document).ready(function() {
         if (inputIsValid()) {
             let operand1 = "";
             let operand2 = "";
-            let operatorIndex = -1;
-            if(input[indexOfFirstOperator(input)] === "-" || input[indexOfFirstOperator(input)] === "+"){
-                //console.log("SLICE: " + input.slice(1));
-                operatorIndex = indexOfFirstOperator(input.slice(1))+1;
-            } else {
-                operatorIndex = indexOfFirstOperator(input);
-            }
-            //console.log("OPERATOR INDEX: " + operatorIndex);
+            let operatorIndex = indexOfFirstOperator(input);
+
 
             for (let i = 0; i < operatorIndex; i++) {
                 operand1 += input[i];
@@ -71,7 +67,7 @@ $(document).ready(function() {
                     result = operand1 / operand2;
                     break;
                 default:
-                       //console.log("SWITCH STATEMENT ERROR");
+                    //console.log("SWITCH STATEMENT ERROR");
                     $('#screen').html("<span id='error'>ERROR</span>");
             }
 
@@ -94,8 +90,8 @@ $(document).ready(function() {
         }
 
         if (isOperator(input[0])) {
-            if(input[0] !== "-" && input[0] !== "+"){
-            //    console.log("TRIGGERED!")
+            if (input[0] !== "-" && input[0] !== "+") {
+                //    console.log("TRIGGERED!")
                 return false;
             }
 
@@ -105,9 +101,9 @@ $(document).ready(function() {
             return false;
         }
 
-        // if (hasMultipleOperators(input)) {
-        //     return false;
-        // }
+        if (hasMultipleOperators(input)) {
+            return false;
+        }
 
         return true;
 
@@ -123,7 +119,7 @@ $(document).ready(function() {
 
     function indexOfFirstOperator(expression) {
         if (hasOperator(expression)) {
-            for (let i = 0; i < expression.length; i++) {
+            for (let i = 1; i < expression.length; i++) {
                 if (isOperator(expression[i])) {
                     return i;
                 }
@@ -133,7 +129,12 @@ $(document).ready(function() {
     }
 
     function hasMultipleOperators(expression) {
-        return expression.includes("x", indexOfFirstOperator(input) + 1) || expression.includes("÷", indexOfFirstOperator(input) + 1)
+        let substring = expression.slice(1);
+        if(indexOfFirstOperator(substring) !== -1 && (substring[indexOfFirstOperator(substring)] === "x" || substring[indexOfFirstOperator(substring)] === "÷")){
+            return true;
+        }
+
+        return false;
     }
 
 
