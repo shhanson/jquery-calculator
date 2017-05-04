@@ -1,19 +1,21 @@
 $(document).ready(function() {
 
     let input = [];
+
     $('#clear').click(function() {
         $('#screen').find('span').remove();
         input = [];
     });
 
     $('span').not('#clear').not('#equals').click(function() {
-        if ($('screen').has($('#error'))) {
+        if ($('#screen').has($('#error'))) {
             $('#error').remove();
         }
 
-        if($('screen').has($('#result'))){
+        if($('#screen').has($('#result'))){
             $('#result').remove();
         }
+
 
         $('#screen').append("<span>" + $(this).text() + "</span>");
         input.push($(this).text());
@@ -67,14 +69,14 @@ $(document).ready(function() {
                     result = operand1 / operand2;
                     break;
                 default:
-                    //console.log("SWITCH STATEMENT ERROR");
+                    console.log("SWITCH STATEMENT ERROR");
                     $('#screen').html("<span id='error'>ERROR</span>");
             }
 
             $('#screen').html("<span id='result'>" + result + "</span>");
 
         } else {
-            //console.log("INVALID INPUT ERROR");
+            console.log("INVALID INPUT ERROR");
             $('#screen').html("<span id='error'>ERROR</span>");
         }
 
@@ -86,24 +88,28 @@ $(document).ready(function() {
 
         //No numbers or operators
         if (input.length === 0) {
+            console.log("INPUT LENGTH ERROR");
             return false;
         }
 
         if (isOperator(input[0])) {
             if (input[0] !== "-" && input[0] !== "+") {
-                //    console.log("TRIGGERED!")
+                    console.log("ISOPERATOR FAILURE")
                 return false;
             }
 
         }
 
         if (isOperator(input[input.length - 1])) {
+            console.log("ISOPERATOR FAILURE")
             return false;
         }
 
         if (hasMultipleOperators(input)) {
+
             return false;
         }
+
 
         return true;
 
@@ -119,7 +125,7 @@ $(document).ready(function() {
 
     function indexOfFirstOperator(expression) {
         if (hasOperator(expression)) {
-            for (let i = 1; i < expression.length; i++) {
+            for (let i = 0; i < expression.length; i++) {
                 if (isOperator(expression[i])) {
                     return i;
                 }
@@ -130,9 +136,12 @@ $(document).ready(function() {
 
     function hasMultipleOperators(expression) {
         let substring = expression.slice(1);
-        if (indexOfFirstOperator(substring) !== -1 && (substring[indexOfFirstOperator(substring)] === "x" || substring[indexOfFirstOperator(substring)] === "÷")) {
-            return true;
+        if (hasOperator(substring)){
+            if(hasOperator(substring.slice(indexOfFirstOperator(substring)+1))){
+                return true;
+            }
         }
+
 
         return false;
     }
