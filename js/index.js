@@ -16,16 +16,13 @@ $(document).ready(function() {
             $('#result').remove();
         }
 
-
         $('#screen').append("<span>" + $(this).text() + "</span>");
         input.push($(this).text());
         console.log(input);
     });
 
     $('#equals').click(function() {
-
         evaluateExpression();
-
     })
 
     function evaluateExpression() {
@@ -69,14 +66,14 @@ $(document).ready(function() {
                     result = operand1 / operand2;
                     break;
                 default:
-                    console.log("SWITCH STATEMENT ERROR");
+                    // console.log("SWITCH STATEMENT ERROR");
                     $('#screen').html("<span id='error'>ERROR</span>");
             }
 
             $('#screen').html("<span id='result'>" + result + "</span>");
 
         } else {
-            console.log("INVALID INPUT ERROR");
+            // console.log("INVALID INPUT ERROR");
             $('#screen').html("<span id='error'>ERROR</span>");
         }
 
@@ -88,28 +85,25 @@ $(document).ready(function() {
 
         //No numbers or operators
         if (input.length === 0) {
-            console.log("INPUT LENGTH ERROR");
+            // console.log("INPUT LENGTH ERROR");
             return false;
         }
 
         if (isOperator(input[0])) {
             if (input[0] !== "-" && input[0] !== "+") {
-                    console.log("ISOPERATOR FAILURE")
+                    // console.log("ISOPERATOR FAILURE")
                 return false;
             }
-
         }
 
         if (isOperator(input[input.length - 1])) {
-            console.log("ISOPERATOR FAILURE")
+            // console.log("ISOPERATOR FAILURE")
             return false;
         }
 
         if (hasMultipleOperators(input)) {
-
             return false;
         }
-
 
         return true;
 
@@ -141,8 +135,6 @@ $(document).ready(function() {
                 return true;
             }
         }
-
-
         return false;
     }
 
